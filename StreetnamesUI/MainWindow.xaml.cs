@@ -82,7 +82,15 @@ namespace StreetnamesUI
 
         private void ExecuteButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                List<string> messages = fileManager.ProcessZip(SourceFileTextBox.Text,DestinationFolderTextBox.Text);
+                //toon extra window met statistieken
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "FileManager", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

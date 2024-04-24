@@ -11,6 +11,12 @@ namespace StreetnamesBL.Model
         public int Id { get; set; }
         public string Name { get; set; }
         private SortedSet<string> streetNames=new SortedSet<string>();
+
+        public Municipality(int id)
+        {
+            Id = id;
+        }
+
         public void AddStreetName(string streetName)
         {
             streetNames.Add(streetName);
