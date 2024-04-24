@@ -10,5 +10,7 @@ namespace StreetnamesBL.Interfaces
     {
         List<string> GetFileNamesFromZip(string fileName);
         List<string> GetFileNamesConfigInfoFromZip(string fileName,string configName);
+        void CleanFolder(string folderName);
+        bool IsFolderEmpty(string folderName);
     }
 }

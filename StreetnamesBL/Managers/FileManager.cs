@@ -65,6 +65,15 @@ namespace StreetnamesBL.Managers
 
         }
 
+        public void CleanFolder(string folderName)
+        {
+            try
+            {
+                processor.CleanFolder(folderName);
+            }
+            catch (Exception ex) { throw new FileManagerException($"CleanFolder {ex.Message}"); }
+        }
+
         public List<string> GetFilesFromZip(string fileName)
         {
             try
@@ -73,6 +82,15 @@ namespace StreetnamesBL.Managers
             }
             catch(Exception ex) { throw new FileManagerException("GetFilesFromZip"); }
 
+        }
+
+        public bool IsFolderEmpty(string folderName)
+        {
+           try
+            {
+                return processor.IsFolderEmpty(folderName);
+            }
+            catch(Exception ex) { throw new FileManagerException($"IsFolderEmpty {ex.Message}"); }
         }
     }
 }

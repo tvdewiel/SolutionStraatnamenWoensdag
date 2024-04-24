@@ -22,6 +22,7 @@ namespace StreetnamesUI
     public partial class MainWindow : Window
     {
         private OpenFileDialog fileDialog = new OpenFileDialog();
+        private OpenFolderDialog folderDialog = new OpenFolderDialog();
         private FileManager fileManager=new FileManager(new FileProcessor());
 
         public MainWindow()
@@ -31,6 +32,7 @@ namespace StreetnamesUI
             fileDialog.Filter = "Zip files (.zip)|*.zip";
             fileDialog.InitialDirectory = @"c:\data\adresdata";
             fileDialog.Multiselect = false;
+            folderDialog.InitialDirectory = @"c:\data\adresdata\tmp";
         }
 
         private void SourceFileButton_Click(object sender, RoutedEventArgs e)
@@ -64,7 +66,18 @@ namespace StreetnamesUI
 
         private void DestinationFolderButton_Click(object sender, RoutedEventArgs e)
         {
-
+            bool? result=folderDialog.ShowDialog();
+            if (result == true && !string.IsNullOrWhiteSpace(folderDialog.FolderName))
+            {
+                if (!fileManager.IsFolderEmpty(folderDialog.FolderName))
+                {
+                    if (MessageBox.Show($"Clean folder {folderDialog.FolderName}","Confirmation",MessageBoxButton.YesNo)==MessageBoxResult.Yes)
+                    {
+                        fileManager.CleanFolder(folderDialog.FolderName);
+                        DestinationFolderTextBox.Text = folderDialog.FolderName;
+                    }
+                }
+            }
         }
 
         private void ExecuteButton_Click(object sender, RoutedEventArgs e)

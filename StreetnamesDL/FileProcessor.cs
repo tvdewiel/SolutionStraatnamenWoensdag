@@ -10,6 +10,20 @@ namespace StreetnamesDL
 {
     public class FileProcessor : IFileProcessor
     {
+        public void CleanFolder(string folderName)
+        {
+            DirectoryInfo dir=new DirectoryInfo(folderName);
+            foreach(FileInfo file in dir.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach(DirectoryInfo di in dir.GetDirectories())
+            {
+                CleanFolder(di.FullName);
+                di.Delete();
+            }
+        }
+
         public List<string> GetFileNamesConfigInfoFromZip(string fileName, string configName)
         {
             using (ZipArchive archive = ZipFile.OpenRead(fileName))
@@ -42,6 +56,12 @@ namespace StreetnamesDL
             {
                 return zipfile.Entries.Select(x=>x.FullName).ToList();
             }
+        }
+
+        public bool IsFolderEmpty(string folderName)
+        {
+            DirectoryInfo dir = new DirectoryInfo(folderName);
+            return (dir.GetFiles().Length == 0 && dir.GetDirectories().Length==0);
         }
     }
 }
